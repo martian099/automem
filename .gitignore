@@ -1,0 +1,9 @@
+# Claude login files: never commit
+.credentials.json
+**/.credentials.json
+
+# Test environments and session data, if any end up in this folder
+claude_envs/
+blank_claude_test/
+projects/*.jsonl
+CLAUDE.md
