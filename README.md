@@ -22,6 +22,10 @@ The simplest memory is one file Claude reads at the start of every conversation,
 
 The next idea is separate files, opened only when needed. That hits a chicken-and-egg problem: Claude can't know it needs a memory it hasn't read. An index file helps only if Claude stops to check it, and in the middle of a task it usually doesn't. Say you told Claude months ago that you're allergic to shellfish, and today you ask for a recipe. Nothing prompts it to look. The memory was saved but never used, and nothing tells you. Keyword or embedding search doesn't fix this either, because a recipe request doesn't look like an allergy note.
 
+### Why not a vector memory system?
+
+A vector database can hold far more memories than automem. But it's a second system to install and run, often alongside hooks or extra packages, and not every setup allows those. automem needs nothing beyond Claude itself, or any capable LLM. No hooks, no packages and no services are required. Your memories also stay as plain text files you can read, check and edit yourself. With embeddings, what the system actually remembers is hidden inside numbers.
+
 ### What automem does instead
 
 In automem, checking memory is a separate, required step before every reply. A helper holds an **index** with one short line per memory saying *when* it matters, such as `shellfish; allergy; food; recipes`. It checks every line against your message, opens a project's own index when that project comes up, and hands Claude only the memories that match. That solves both problems: no memory is skipped for lack of looking, and only what's relevant is loaded. The index lives in the helper, not in your conversation, at the cost of a short wait each time. Projects you're not working on take one line each, so the index stays small even as memory grows into the thousands.
