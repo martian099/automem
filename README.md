@@ -48,6 +48,9 @@ automem has no code of its own and depends on no outside system. It's plain-lang
 - **Ideas, not scripts.** The skills explain *what* the memory system is for and *how* its parts fit together: what's worth saving, what an index entry is for, when to ask you. They leave the judgment to the model rather than prescribing every step.
 - **It gets better as models get better.** Rigid rules can get in the way of a smart model. High-level instructions let each new Claude model apply its own intelligence, so the system improves without being rewritten.
 - **Fewer patches.** There's no code to break when a tool, an API or a model changes. Improving automem usually means editing a sentence, not shipping a fix.
+- **You can audit everything.**
+  - Your memories are plain text files, not entries in a database or numbers in a vector index.
+  - What you see in the files is exactly what Claude uses, so you can open any memory, check where it came from, and fix or delete it by hand.
 - **The idea is portable.** The design of an always-checked index, a strict writer and a background cleaner isn't specific to Claude. Any capable LLM agent that can read files and run helper agents could follow the same instructions. Today's skills are written for Claude Code.
 
 ---
@@ -113,7 +116,7 @@ It runs on its own. You can also say:
 - "Save what you learned"
 - "Clean up my memory"
 
-Memories are plain text files in `~/.claude/memory/`, and you can read them anytime.
+Memories are plain text files in `~/.claude/memory/`. You can read or edit them anytime. If you edit one by hand, update its `updated:` date so the next cleanup checks it.
 
 ## Good to know
 

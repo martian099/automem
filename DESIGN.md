@@ -61,6 +61,10 @@ There are two ways to fail:
 **Rejected alternatives:**
 - **Grep or keyword recall:** it misses memories worded differently from the question.
 - **Splitting indexes by folder or size:** it brings back the chicken-and-egg problem one level up.
+- **A vector database or embeddings:**
+  - It's an extra service to run.
+  - More importantly, memory stops being auditable. Embeddings can't be read or hand-edited.
+  - In automem, the Markdown files are the single source of truth. The user can view, verify and edit exactly what Claude uses.
 - **A fresh recall agent per message:** it re-reads the index on every message and costs more at scale.
 - **A blocking recall tool (an MCP server running headless `claude -p`):** it's one more moving part. The accepted cost is about 3 main-agent passes per message instead of 2.
 
