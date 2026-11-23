@@ -387,5 +387,5 @@ Memories are plain text files in `\\\~/.claude/memory/` (or `$CLAUDE\\\_CONFIG\\
 
 ## License
 
-No license has been chosen yet.
+[MIT](LICENSE)
 
