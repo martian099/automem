@@ -39,12 +39,12 @@ Reply with exactly this, and nothing else: no summary, advice or commentary. Nev
 
 Already sent: <path>; <path> | none
 Missing: <path>; <path> | none
-Total: <N>
+Total: <N> (<M> already sent)
 ```
 
 - **New:** memories you haven't returned earlier in this session get their full content, verbatim.
 - **Already sent:** memories you returned in an earlier reply and that are still relevant are listed by path only. If the query says `Resend: yes`, give every kept memory in full instead.
 - Mark `EXPIRED <date>` when the file's `expires` date is before today.
 - `Missing:` lists index lines whose file doesn't exist.
-- `Total` is written last: the number of `###` sections plus the number of paths on the `Already sent` line.
-- Always include all three closing lines. If nothing is relevant, there are no `###` sections and `Total: 0`.
+- `Total` is written last: `<N>` is the number of `###` sections plus the number of paths on the `Already sent` line, and `<M>` is the number of paths on the `Already sent` line. For example, 2 new memories and 3 already sent is `Total: 5 (3 already sent)`.
+- Always include all three closing lines. If nothing is relevant, there are no `###` sections and the line is `Total: 0 (0 already sent)`.
