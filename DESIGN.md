@@ -7,6 +7,11 @@ This document explains why automem is built the way it is. It covers each design
 - **No hooks, servers, subscriptions, vector databases or local models.**
   - Everything is Markdown: four skills, plus rules in the global `CLAUDE.md`.
   - The trade-off is that the rules are instructions, not code, so a recall or a save can occasionally be skipped. A prompt-submit hook would be more reliable, but it would be one more thing to install and maintain.
+- **Describe intent, don't over-prescribe.**
+  - The skills state the purpose of each piece and the rules that matter, and leave the judgment to the model.
+  - This keeps the system working as models improve. It also avoids patches when tools change.
+  - It keeps the design portable to other LLM agents that can read files and delegate to helpers.
+  - The exceptions are hard limits where precision matters, which are spelled out exactly: the gate checks, the word limits and the file layout.
 - **Must scale to thousands of memories** without growing the main conversation's context.
 - **Not tied to code repositories.** Memory covers the user's whole life, not just code.
 

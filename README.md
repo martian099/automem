@@ -41,6 +41,17 @@ Why not just keep one big notebook of everything Claude should know? Because eve
 
 ---
 
+## Design principle: describe the idea, trust the model
+
+automem has no code of its own and depends on no outside system. It's plain-language instructions that Claude follows.
+
+- **Ideas, not scripts.** The skills explain *what* the memory system is for and *how* its parts fit together: what's worth saving, what an index entry is for, when to ask you. They leave the judgment to the model rather than prescribing every step.
+- **It gets better as models get better.** Rigid rules can get in the way of a smart model. High-level instructions let each new Claude model apply its own intelligence, so the system improves without being rewritten.
+- **Fewer patches.** There's no code to break when a tool, an API or a model changes. Improving automem usually means editing a sentence, not shipping a fix.
+- **The idea is portable.** The design of an always-checked index, a strict writer and a background cleaner isn't specific to Claude. Any capable LLM agent that can read files and run helper agents could follow the same instructions. Today's skills are written for Claude Code.
+
+---
+
 ## How it works
 
 ```
