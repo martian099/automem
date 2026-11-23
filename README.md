@@ -8,53 +8,23 @@ It's four **skills** (instruction packs Claude loads for a specific job) plus a 
 
 ---
 
-## Why not just use Claude Code's built-in memory?
+## Why automem?
 
-Claude Code has its own auto memory, so that's the first question. Here's what automem adds.
+### Why not Claude Code's built-in memory?
 
-| | Built-in auto memory | automem |
-|---|---|---|
-| **Where memory lives** | One store per code repository or folder | One store for you, organized by your real projects |
-| **Reaching other memory** | What it learned in one folder doesn't help in another | Recall can bring in memories from any project, from whatever folder you're working in |
-| **What gets loaded** | One index file, of which only the first 200 lines are read | Every index entry is checked, and only the relevant memories are loaded |
-| **Saving** | Claude decides on its own when to save, and saves don't always happen | Clear save triggers, plus a strict writer that saves only what you actually said |
-**Memory follows the work, not the folder.**
-- In automem, a *project* is something you're actually doing, like an apartment search, a product launch or a research paper. It isn't a folder on your computer.
-- Work often spans folders. You might be in one repo and need a decision you made in another, or plan a trip from a coding folder.
-- Before each reply, recall walks the indexes and pulls in any project's memories that are relevant, wherever you are. General memories, such as people, preferences and health, are available everywhere.
+By default, Claude Code's auto memory is kept per project folder. What Claude learns in one folder isn't there when you work in another, but real work doesn't stay in one folder. You might need a decision from another project, or plan a trip from a coding folder. You can point every folder at one shared memory, but then everything piles into a single index, and only its first 200 lines are loaded. Claude also saves only when it happens to notice. automem organizes memory by what you're working on, not where. It saves at set moments, like a correction or a decision, and keeps the quote each memory came from.
 
----
+### Why not one memory file?
 
-## Built to scale, and nothing gets skipped
+The simplest memory is one file Claude reads at the start of every conversation, like `CLAUDE.md`. That works for a few dozen notes, but the whole file loads every time, relevant or not, and Claude can only hold so much text at once. A thousand memories is a novel's worth of text in every conversation, crowding out the task you actually asked for.
 
-Why not just keep one big notebook of everything Claude should know? Because every memory system faces a dilemma:
+### Why not a folder of memory files?
 
-- **Load everything, and it doesn't scale.**
-  - Claude can only keep a limited amount of text in mind at once, its *working space*.
-  - A thousand memories is roughly 100,000 words, as long as a novel, loaded into every message.
-  - Your actual task gets crowded out, and Claude follows the notes less closely.
-- **Load memories only when needed, and you hit a chicken-and-egg problem.**
-  - Claude can't know it needs a memory it hasn't loaded.
-  - Say you told Claude months ago that you're allergic to shellfish. Today you ask for a dinner recipe. If nothing points Claude to that memory, you get a shrimp recipe.
-  - The memory was saved perfectly and still skipped, and nothing told you.
+The next idea is separate files, opened only when needed. That hits a chicken-and-egg problem: Claude can't know it needs a memory it hasn't read. An index file helps only if Claude stops to check it, and in the middle of a task it usually doesn't. Say you told Claude months ago that you're allergic to shellfish, and today you ask for a recipe. Nothing prompts it to look. The memory was saved but never used, and nothing tells you. Keyword or embedding search doesn't fix this either, because a recipe request doesn't look like an allergy note.
 
-**automem solves both with an index that Claude always checks but rarely loads.**
+### What automem does instead
 
-1. **Every memory is always seen.**
-   - Every memory has a short entry in an index, like the index at the back of a book.
-   - Before each reply, a helper goes through the *whole* index, so every memory is considered every time.
-2. **Entries say *when* a memory matters, not what it says.**
-   - For example: `shellfish; allergy; food; recipes; restaurants`.
-   - A recipe question matches the entry, even if you never said "allergy" today.
-   - Short cues mean thousands of entries fit where a notebook of a few hundred wouldn't.
-3. **Only real matches are loaded.**
-   - The helper opens the matching memories, checks they really help, and passes on only those.
-   - Your conversation gets the shellfish memory, not the other thousand.
-4. **The index never enters your conversation.**
-   - A separate helper holds it, so a bigger memory doesn't cost your conversation any working space.
-5. **The layout keeps the index lean.**
-   - General memories (people, health, tastes, habits) each get their own line, so none is ever hidden.
-   - A project with hundreds of memories takes one line until you work on it. Then its own index opens.
+In automem, checking memory is a separate, required step before every reply. A helper holds an **index** with one short line per memory saying *when* it matters, such as `shellfish; allergy; food; recipes`. It checks every line against your message, opens a project's own index when that project comes up, and hands Claude only the memories that match. That solves both problems: no memory is skipped for lack of looking, and only what's relevant is loaded. The index lives in the helper, not in your conversation, at the cost of a short wait each time. Projects you're not working on take one line each, so the index stays small even as memory grows into the thousands.
 
 ---
 
