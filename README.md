@@ -8,6 +8,23 @@ It's four **skills** (instruction packs Claude loads for a specific job) plus a 
 
 ---
 
+## Why not just use Claude Code's built-in memory?
+
+Claude Code has its own auto memory, so that's the first question. Here's what automem adds.
+
+| | Built-in auto memory | automem |
+|---|---|---|
+| **Where memory lives** | One store per code repository or folder | One store for you, organized by your real projects |
+| **Reaching other memory** | What it learned in one folder doesn't help in another | Recall can bring in memories from any project, from whatever folder you're working in |
+| **What gets loaded** | One index file, of which only the first 200 lines are read | Every index entry is checked, and only the relevant memories are loaded |
+| **Saving** | Claude decides on its own when to save, and saves don't always happen | Clear save triggers, plus a strict writer that saves only what you actually said |
+**Memory follows the work, not the folder.**
+- In automem, a *project* is something you're actually doing, like an apartment search, a product launch or a research paper. It isn't a folder on your computer.
+- Work often spans folders. You might be in one repo and need a decision you made in another, or plan a trip from a coding folder.
+- Before each reply, recall walks the indexes and pulls in any project's memories that are relevant, wherever you are. General memories, such as people, preferences and health, are available everywhere.
+
+---
+
 ## Built to scale, and nothing gets skipped
 
 Why not just keep one big notebook of everything Claude should know? Because every memory system faces a dilemma:

@@ -13,7 +13,10 @@ This document explains why automem is built the way it is. It covers each design
   - It keeps the design portable to other LLM agents that can read files and delegate to helpers.
   - The exceptions are hard limits where precision matters, which are spelled out exactly: the gate checks, the word limits and the file layout.
 - **Must scale to thousands of memories** without growing the main conversation's context.
-- **Not tied to code repositories.** Memory covers the user's whole life, not just code.
+- **Not tied to code repositories.**
+  - Memory covers the user's whole life, not just code.
+  - Projects are real efforts, not folders, so recall can retrieve any relevant project's memories from any working folder by walking the indexes.
+  - This is the main gap in Claude Code's built-in auto memory, which is scoped to one repository and saves only when Claude decides to.
 
 ## Pieces
 
