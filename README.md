@@ -32,22 +32,11 @@ In automem, checking memory is a separate, required step before every reply. A h
 
 ### Built to scale
 
-Every part of automem does work that grows with what's relevant right now, not with how much you've saved.
-- **The index stays small.** The main index has one short line per general memory and one per project. A project's own index opens only when you're working on that project.
-- **Saving reads very little.** It looks only at the index and the few memories related to the new one.
-- **Cleanup only checks what you've been using.** That's general memory plus the projects you worked on in the conversation. It looks closely only at memories that changed since the last cleanup.
-- **The archive is never scanned.** Old and expired memories move there.
+automem stays light however much you save. The only part that grows with everything you've saved is the index, at one short line per general memory and one per project. Saving a new memory reads the indexes and the few memories close to it, not the rest. Cleanup covers only general memory and the projects you just used, and opens only what changed since the last cleanup. Expired memories move to an archive that's never read again. Apart from the very first cleanup, no step reads all your memories at once.
 
-No step ever needs to read every memory at once.
+### Low token usage
 
-### Low token overhead
-
-Your main conversation never holds the index.
-- **Each message:** the conversation sends the recall helper a short question and gets back only the memories that matter. Memories it already received are named, not repeated.
-- **The helper is cheap to run.** It uses Claude Haiku, a smaller and cheaper model, and reads the index once per conversation, not on every message.
-- **Saving and cleanup** run in the background, and only when there's something to save or tidy.
-
-The main cost is one extra round trip per message while recall runs. That's a short wait and a modest number of tokens, not a copy of your whole memory in every message.
+Memory adds little to your token usage. Tokens are the small chunks of text that Claude's usage is measured in. Your conversation receives only the memories that matter to it, and any it already has are named rather than sent again. The helper keeps the index in its own working space, not yours, and re-reads it only when a save or cleanup changes it. It also runs on Claude Haiku, a smaller and cheaper model. A writer starts only when there's something to save, and cleanup runs in the background about every two weeks. Each message costs a short wait, one extra turn in your conversation to receive recall's reply, and a Haiku call that's mostly cached. That's far less than loading your whole memory into every message.
 
 ---
 
