@@ -30,6 +30,25 @@ A vector database can hold far more memories than automem. But it's a second sys
 
 In automem, checking memory is a separate, required step before every reply. A helper holds an **index** with one short line per memory saying *when* it matters, such as `shellfish; allergy; food; recipes`. It checks every line against your message, opens a project's own index when that project comes up, and hands Claude only the memories that match. That solves both problems: no memory is skipped for lack of looking, and only what's relevant is loaded. The index lives in the helper, not in your conversation, at the cost of a short wait each time. Projects you're not working on take one line each, so the index stays small even as memory grows into the thousands.
 
+### Built to scale
+
+Every part of automem does work that grows with what's relevant right now, not with how much you've saved.
+- **The index stays small.** The main index has one short line per general memory and one per project. A project's own index opens only when you're working on that project.
+- **Saving reads very little.** It looks only at the index and the few memories related to the new one.
+- **Cleanup only checks what you've been using.** That's general memory plus the projects you worked on in the conversation. It looks closely only at memories that changed since the last cleanup.
+- **The archive is never scanned.** Old and expired memories move there.
+
+No step ever needs to read every memory at once.
+
+### Low token overhead
+
+Your main conversation never holds the index.
+- **Each message:** the conversation sends the recall helper a short question and gets back only the memories that matter. Memories it already received are named, not repeated.
+- **The helper is cheap to run.** It uses Claude Haiku, a smaller and cheaper model, and reads the index once per conversation, not on every message.
+- **Saving and cleanup** run in the background, and only when there's something to save or tidy.
+
+The main cost is one extra round trip per message while recall runs. That's a short wait and a modest number of tokens, not a copy of your whole memory in every message.
+
 ---
 
 ## Design principle: describe the idea, trust the model
